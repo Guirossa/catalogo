@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CatalogoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,14 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('catalogo/buscar',[CatalogoController::class,'buscar']);
+Route::resource('catalogo',CatalogoController::class);
 
-
-Route::get('/cayalogo', function () {
-    return 'catalogo';
-});
-
-use App\Http\Controllers\CatalogoController;
-Route::resource('/catalogo', CatalogoController::class);
+Route::get('catalogo/buscar',[CatalogoController::class,'buscar']);
