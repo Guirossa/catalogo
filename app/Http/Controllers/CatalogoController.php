@@ -9,7 +9,7 @@ use Session;
 class CatalogoController extends Controller
 {
     public function index(){
-        $catalogos = Catalogo::all();
+        $catalogos = Catalogo::paginate(5);
         return view('catalogo.index',array('catalogos' => $catalogos,'busca'=>null));
     }
 
@@ -19,16 +19,27 @@ class CatalogoController extends Controller
         return view('catalogo.show',array('catalogo' => $catalogo));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        $this->validate($request,[
+            'marca' => 'required',
+            'modelo' => 'required',
+            'cor' => 'required',
+            'preco' => 'required',
+        ]);
         $catalogo = new Catalogo();
         $catalogo->marca = $request->input('marca');
         $catalogo->cor = $request->input('cor');
         $catalogo->modelo = $request->input('modelo');
         $catalogo->preco = $request->input('preco');
         if($catalogo->save()){
-            return redirect('catalogo');
+            if($request->hasFile('foto')){
+                $imagem = $request->file('foto');
+                $nomearquivo = md5($catalogo->id).".".$imagem->getClientOriginalExtension();
+                //dd($imagem, $nomearquivo,$catalogo->id);
+                $request->file('foto')->move(public_path('./img/catalogo/'),$nomearquivo);
+            }
         }
+            return redirect('catalogo');
     }
 
     public function create(){
@@ -41,16 +52,20 @@ class CatalogoController extends Controller
 
     }
 
-    public function destroy($id){
+    public function destroy(Request $request, $id)
+    {
         $catalogo = Catalogo::find($id);
+        if (isset($request->foto)){
+            unlink($request->foto);
+        }
         $catalogo->delete();
         Session::flash('mensagem', 'Produto Excluido com Sucesso');
         return redirect(url('catalogo/'));
     }
 
     public function buscar(Request $request) {
-        $catalogos = Catalogo::where('modelo','LIKE','%'.$request->input('busca').'%')->orwhere('marca','LIKE','%'.$request->input('busca').'%')->paginate(5);
-        return view('catalogo.index',array('catalogo' => $catalogos,'busca'=>$request->input('busca')));
+        $catalogos = Catalogo::where('id','LIKE','%'.$request->input('busca').'%')->orwhere('id','LIKE','%'.$request->input('busca').'%')->paginate(5);
+        return view('catalogo.index',array('catalogos' => $catalogos,'busca'=>$request->input('busca')));
     }
     /**
      * Update the specified resource in storage.
@@ -66,8 +81,12 @@ class CatalogoController extends Controller
                 'cor' => 'required',
                 'preco' => 'required',
             ]);
-            
             $catalogo = Catalogo::find($id);
+            if($request->hasfile('foto')){
+                $imagem = $request->file('foto');
+                $nomearquivo = md5($catalogo->id).".".$imagem->getClientOriginalExtension();
+                $request->file('foto')->move(public_path('.\img\catalogo'),$nomearquivo);
+            }
             $catalogo->marca = $request->input('marca');
             $catalogo->modelo = $request->input('modelo');
             $catalogo->cor = $request->input('cor');

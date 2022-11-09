@@ -28,6 +28,9 @@
         {{Form::text('modelo',$catalogo->modelo,['class'=>'form-control','required','placeholder'=>'Modelo do Produto'])}}
         {{Form::label('preco', 'Preco')}}
         {{Form::text('preco',$catalogo->preco,['class'=>'form-control','required','placeholder'=>'Preço'])}}
+        <br>
+        {{Form::label('foto','foto')}}
+        {{Form::file('foto',['class'=>'form-control', 'id'=> 'foto'])}}
         <br />
         {{Form::submit('Salvar',['class'=>'btn btn-success'])}}
         <a href="{{url('catalogo')}}" class="btn btn-secondary">Voltar</a>
