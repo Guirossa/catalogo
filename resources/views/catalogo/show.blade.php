@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('title','catalogo - '.$catalogo->modelo)
 @section('content')
+<br>
     <div class="card w-50 m-auto">
         @php
             $nomeimagem = "";

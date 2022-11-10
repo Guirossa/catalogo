@@ -12,6 +12,13 @@
                         {{$numCatalogo}}
                     </div>
                 </div>
+                <div class="col m-3 bg-warning text-light">
+                    <div class="card-header p-2">Fornecedores Cadastrados</div>
+                    <div class="card-body h3 p-5">
+                        {{$numFornecedores}}
+                    </div>
+                </div>
         </div>
     </div>
+
 @endsection

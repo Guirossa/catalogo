@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalogo;
+use App\Models\Fornecedores;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,9 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        // Passar quantidades de Dados - para criar um DashBoard
+        $numFornecedores = Fornecedores::all()->count();
         $numCatalogo = Catalogo::all()->count();
-        return view('home',array('numCatalogo'=>$numCatalogo));
+        return view('home',array('numCatalogo'=>$numCatalogo,'numFornecedores'=>$numFornecedores));
     }
 }

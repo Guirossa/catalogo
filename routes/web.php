@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogoController;
-use App\Http\Controllers\FornecedoresController;
+use App\Http\Controllers\FornecedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,7 @@ Route::resource('catalogo',CatalogoController::class);
 
 Route::get('catalogo/buscar',[CatalogoController::class,'buscar']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index']);
 
-Route::get('fornecedores',[FornecedoresController::class]);
+Route::get('fornecedor/buscar',[FornecedorController::class,'buscar']);
+Route::resource('fornecedores',FornecedorController::class);

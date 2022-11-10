@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('fornecedores', function (Blueprint $table) {
             $table->id();
+            $table->string('cidade');
+            $table->string('estado');
+            $table->string('pais');
             $table->timestamps();
         });
     }

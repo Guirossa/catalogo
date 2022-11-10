@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('title','Lista de produtos')
 @section('content')
+    <br>
     <h1>Lista de produtos</h1>
     @if(Session::has('mensagem'))
         <div class="alert alert-info">
@@ -60,7 +61,7 @@
         </table>
         {{$catalogos->links()}}
         <div class="col-sm-3">
-            <a class="btn btn-success" href="{{url('catalogo/create')}}">Criar</a>
+            <a class="btn btn-success" href="{{url('catalogo/create')}}">Adicionar Novo Produto</a>
         </div>   
 </div>
 
